@@ -1,6 +1,5 @@
 
 #include "mpi.h"
- 
 #include <algorithm>
 #include <fstream>
 #include <cmath>
