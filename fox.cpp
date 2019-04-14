@@ -24,15 +24,15 @@ int main(int argc,char *argv[])
  
     // 参数检查
     int N=4;
-    // {
-    //     for (int i=1; i<argc; ++i ){
-    //         char * pos =strstr(argv[i], "-N=");
-    //         if ( pos!=NULL){
-    //             sscanf(pos, "-N=%d", &N);
-    //             break;
-    //         }
-    //     }
-    // }
+    {
+        for (int i=1; i<argc; ++i ){
+            char * pos =strstr(argv[i], "-N=");
+            if ( pos!=NULL){
+                sscanf(pos, "-N=%d", &N);
+                break;
+            }
+        }
+    }
  
     const int procs_size_sqrt = floor(sqrt(static_cast<double>(procs_size)));
     const int n = N / procs_size_sqrt;
@@ -69,7 +69,7 @@ int main(int argc,char *argv[])
         }
  
     //输出矩阵
-    printf("A on procs %d :  ", procs_id);
+    printf("\nA on procs %d :  ", procs_id);
     for (int i=0; i<n; ++i) {
         for (int j=0; j<n; ++j) {
             printf("%5d",A[i*n+j]);
@@ -77,7 +77,7 @@ int main(int argc,char *argv[])
         printf(" ");
     }
  
-    printf("B on procs %d :  ", procs_id);
+    printf("\nB on procs %d :  ", procs_id);
     for (int i=0; i<n; ++i) {
         for (int j=0; j<n; ++j) {
             printf("%5d",B[i*n+j]);
@@ -126,7 +126,7 @@ int main(int argc,char *argv[])
     }
  
     //输出结果
-    printf("C on procs %d :  ", procs_id);
+    printf("\nC on procs %d :  ", procs_id);
     for (int i=0; i<n; ++i) {
         for (int j=0; j<n; ++j) {
             printf("%5d",C[i*n+j]);
@@ -146,7 +146,7 @@ int main(int argc,char *argv[])
     delete []T;
     end_time = MPI_Wtime();
     MPI_Finalize();
-    printf("task %d consumed %lf seconds ", procs_id, end_time-start_time);
+    printf("\ntask %d consumed %lf seconds ", procs_id, end_time-start_time);
  
     return 0;
 }
