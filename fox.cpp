@@ -3,7 +3,7 @@
 #include<math.h>
 #include"mpi.h"
 #include<iostream>
-#define MATRIX_SIZE 3000
+#define MATRIX_SIZE 4
 
 int first_matrix[MATRIX_SIZE][MATRIX_SIZE];
 int second_matrix[MATRIX_SIZE][MATRIX_SIZE];
