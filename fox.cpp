@@ -2,6 +2,7 @@
 #include <ctime>
 #include<math.h>
 #include"mpi.h"
+#include<ostream>
 
 #define MATRIX_SIZE 3000
 
