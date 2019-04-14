@@ -175,6 +175,11 @@ int main (int argc, char *argv[])
     MPI_Gather (&t, 1, MPI_DOUBLE, t_all, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     if (rank == 0)
     {
+            // output sorting result :
+   
+        for (i = 0; i < n; i++)
+           printf ("%ld ", i, a_all[i]);
+        printf("\n");
         double t_max = t_all[0];
         for (i = 1; i < size; i++)
         {
@@ -184,13 +189,6 @@ int main (int argc, char *argv[])
         printf ("\n t_max = %lf \n", t_max);
     }
 
-    // output sorting result :
-   if (rank == 0)
-   {
-       for (i = 0; i < n; i++)
-           printf ("%ld ", i, a_all[i]);
-   }
-    printf("\n");
     // free memory :
     if (rank == 0)
     {
