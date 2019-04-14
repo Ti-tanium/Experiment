@@ -12,7 +12,7 @@ main (int argc, char *argv[])
     int npes, dims[2], periods[2];
 	int myrank, my2drank, mycoords[2];
 	int shiftsource, shiftdest, rightrank;
-    sint leftrank, downrank, uprank;
+    int leftrank, downrank, uprank;
     MPI_Status status;
     MPI_Comm comm_2d;
     MPI_Init(&argc, &argv);
