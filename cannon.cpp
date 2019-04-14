@@ -11,6 +11,7 @@ int main (int argc, char *argv[])
             printf("Usage: %s <the dimension of  the matrix>\n", argv[0]);                
 
     double *a, *b, *c;
+    double start_time, end_time, time;
     int npes, dims[2], periods[2];
 	int myrank, my2drank, mycoords[2];
 	int shiftsource, shiftdest, rightrank;
@@ -87,11 +88,13 @@ int main (int argc, char *argv[])
                 printf("%9.7f ", c[i*nlocal+j]);
             printf("\n");
         }
-        free(a);
-	    free(b);
-        free(c);
-        MPI_Finalize();
     }
+    free(a);
+	free(b);
+    free(c);
+    end_time = MPI_Wtime();
+    MPI_Finalize();
+    printf("\ntask %d consumed %lf seconds ", procs_id, end_time-start_time);
     return 0;
 }
 
