@@ -2,7 +2,7 @@
 #include <ctime>
 #include<math.h>
 #include"mpi.h"
-#include<ostream>
+#include<iostream>
 #define MATRIX_SIZE 3000
 
 int first_matrix[MATRIX_SIZE][MATRIX_SIZE];
@@ -185,6 +185,7 @@ int main(int argc, char *argv[]) {
     int **local_a, **local_b, **local_c;
     clock_t start,finish;
     MPI_Init(&argc, &argv);
+    start_time = MPI_Wtime();
 
     GridStructure grid;
     GridSetup(&grid);
