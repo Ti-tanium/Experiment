@@ -189,7 +189,11 @@ int main(int argc, char *argv[]) {
     GridStructure grid;
     GridSetup(&grid);
     GenerateMatrices();
-
+    printf("First Matrix:\n");
+    PrintMatrix(first_matrix,MATRIX_SIZE);
+    printf("Second Matrix:\n");
+    PrintMatrix(second_matrix,MATRIX_SIZE);
+    
     block_size = MATRIX_SIZE / grid.dim;
     int base_row = grid.row * block_size;
     int base_col = grid.col * block_size;
@@ -261,7 +265,8 @@ int main(int argc, char *argv[]) {
             }
         std::cout << "OK" << std::endl;
     }
-
+    printf("Result\n");
+    PrintMatrix(res,MATRIX_SIZE);
     MPI_Finalize();
     exit(0);
 }		
