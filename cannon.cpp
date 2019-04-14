@@ -29,8 +29,7 @@ main (int argc, char *argv[])
     dims[1] = npes/dims[0];
     if (dims[0] != dims[1]){
         if (myrank ==0 )
-            printf("The number of processes must be a
-        perfect square.\n");
+            printf("The number of processes must be a perfect square.\n");
         MPI_Finalize();
         exit(0);
     }
@@ -45,7 +44,7 @@ main (int argc, char *argv[])
     srand48((long)myrank);
     for ( i=0; i<nlocal*nlocal; i++)  {
         a[i] = b[i] =(double)i; 
-       c[i] = 0.0;
+        c[i] = 0.0;
     }
     MPI_Cart_shift(comm_2d, 0, -mycoords[0], &shiftsource, &shiftdest);
     MPI_Sendrecv_replace(a,nlocal*nlocal, MPI_DOUBLE, shiftdest,1,shiftsource, 1, comm_2d, &status);
@@ -57,7 +56,7 @@ main (int argc, char *argv[])
       	MatrixMultiply(nlocal, a, b, c);
  		MPI_Sendrecv_replace(a, nlocal*nlocal, 
         MPI_DOUBLE,leftrank,1,rightrank,  1, comm_2d, &status);
-        MPI_Sendrecv_replace(b, nlocal*nlocal,   MPI_DOUBLE,      uprank, 1, downrank, 1, comm_2d, &status);
+        MPI_Sendrecv_replace(b, nlocal*nlocal,MPI_DOUBLE, uprank, 1, downrank, 1, comm_2d, &status);
     }
     MPI_Cart_shift(comm_2d, 0, +mycoords[0], &shiftsource,   &shiftdest);
     MPI_Sendrecv_replace(a, nlocal*nlocal, MPI_DOUBLE, shiftdest, 1, shiftsource, 1, comm_2d, &status);
