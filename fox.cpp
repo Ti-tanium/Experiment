@@ -4,11 +4,10 @@
 #include <fstream>
 #include <cmath>
 #include <cstring>
-using namespace std;
- 
+
 const int root_id = 0;
 const int max_procs_size = 16;
- 
+
 int main(int argc,char *argv[])
 {
     double start_time, end_time, time;
