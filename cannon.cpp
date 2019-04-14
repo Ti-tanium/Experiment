@@ -4,7 +4,7 @@
 #include "mpi.h"
 #define MAX_PROCESSOR_NUM 12
 void MatrixMultiply(int n, double *a, double *b, double *c);
-main (int argc, char *argv[])
+int main (int argc, char *argv[])
 {
     int i,j,k,m,p;
     int n, nlocal;
@@ -90,6 +90,7 @@ main (int argc, char *argv[])
         free(c);
         MPI_Finalize();
     }
+    return 0;
 }
 void MatrixMultiply(int n, double *a, double *b, double *c) {
    	int i, j, k;
