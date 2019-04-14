@@ -8,7 +8,7 @@ int main (int argc, char *argv[])
 {
     int i,j,k,m,p;
     int n, nlocal;
-            printf("Usage: %s <the dimension of  the matrix>\n", argv[0]);                
+    printf("Usage: %s <the dimension of  the matrix>\n", argv[0]);                
 
     double *a, *b, *c;
     double start_time, end_time, time;
@@ -94,7 +94,7 @@ int main (int argc, char *argv[])
     free(c);
     end_time = MPI_Wtime();
     MPI_Finalize();
-    printf("\ntask %d consumed %lf seconds ", procs_id, end_time-start_time);
+    printf("\nTime used: %lf seconds\n",end_time-start_time);
     return 0;
 }
 
