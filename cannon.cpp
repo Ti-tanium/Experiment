@@ -70,21 +70,21 @@ int main (int argc, char *argv[])
     MPI_Comm_free(&comm_2d); 
     if (myrank ==0){
         puts("Random Matrix A");
-        for(i = 0; i < nlocal; i ++){
-            for(j = 0; j < nlocal; j ++)
+        for(i = 0; i < nlocal; i++){
+            for(j = 0; j < nlocal; j++)
  		        printf("%9.7f ", a[i*nlocal+j]);
         	printf("\n");
     	} 	
         puts("Random Matrix B");
-        for(i = 0; i < nlocal; i ++){
-            for(j = 0; j < nlocal; j ++)
+        for(i = 0; i < nlocal; i++){
+            for(j = 0; j < nlocal; j++)
                 printf("%9.7f ", b[i*nlocal+j]);
             printf("\n");
         }
         puts("Matrix C = A*B");
 
-        for(i = 0; i < nlocal; i ++){
-            for(j = 0; j < nlocal; j ++) 
+        for(i = 0; i < nlocal; i++){
+            for(j = 0; j < nlocal; j++) 
                 printf("%9.7f ", c[i*nlocal+j]);
             printf("\n");
         }
