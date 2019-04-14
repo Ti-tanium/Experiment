@@ -8,6 +8,8 @@ int main (int argc, char *argv[])
 {
     int i,j,k,m,p;
     int n, nlocal;
+            printf("Usage: %s <the dimension of  the matrix>\n", argv[0]);                
+
     double *a, *b, *c;
     int npes, dims[2], periods[2];
 	int myrank, my2drank, mycoords[2];
@@ -20,7 +22,7 @@ int main (int argc, char *argv[])
     MPI_Comm_rank(MPI_COMM_WORLD,&myrank);
     if (argc !=2){
         if (myrank ==0)
-            printf("Usage: %s <the dimension of  thematrix>\n", argv[0]);                
+            printf("Usage: %s <the dimension of  the matrix>\n", argv[0]);                
     	    MPI_Finalize();
          exit(0);
     }
@@ -92,6 +94,7 @@ int main (int argc, char *argv[])
     }
     return 0;
 }
+
 void MatrixMultiply(int n, double *a, double *b, double *c) {
    	int i, j, k;
    	for (i = 0; i < n; i++)
