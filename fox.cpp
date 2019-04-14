@@ -23,16 +23,16 @@ int main(int argc,char *argv[])
     MPI_Comm_rank(MPI_COMM_WORLD,&procs_id);
  
     // 参数检查
-    int N=0;
-    {
-        for (int i=1; i<argc; ++i ){
-            char * pos =strstr(argv[i], "-N=");
-            if ( pos!=NULL){
-                sscanf(pos, "-N=%d", &N);
-                break;
-            }
-        }
-    }
+    int N=4;
+    // {
+    //     for (int i=1; i<argc; ++i ){
+    //         char * pos =strstr(argv[i], "-N=");
+    //         if ( pos!=NULL){
+    //             sscanf(pos, "-N=%d", &N);
+    //             break;
+    //         }
+    //     }
+    // }
  
     const int procs_size_sqrt = floor(sqrt(static_cast<double>(procs_size)));
     const int n = N / procs_size_sqrt;
