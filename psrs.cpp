@@ -58,8 +58,8 @@ int main (int argc, char *argv[])
 
         srand (time (NULL));
         for (i = 0; i < n; i++)
-            a_all[i] = rand ();
-            printf("%d ",a_all[i]);
+            a_all[i] =1+(int)(50.0*rand()/(RAND_MAX+1.0));;
+            printf("%ld ",a_all[i]);
 //        a_all[0] = 15; a_all[1] = 46; a_all[2] = 48; a_all[3] = 93; a_all[4] = 39; a_all[5] = 6; a_all[6] = 72; a_all[7] = 91; a_all[8] = 14;
 //        a_all[9] = 36; a_all[10] = 69; a_all[11] = 40; a_all[12] = 89; a_all[13] = 61; a_all[14] = 97; a_all[15] = 12; a_all[16] = 21; a_all[17] = 54;
 //        a_all[18] = 53; a_all[19] = 97; a_all[20] = 84; a_all[21] = 58; a_all[22] = 32; a_all[23] = 27; a_all[24] = 33; a_all[25] = 72; a_all[26] = 20;
@@ -187,7 +187,7 @@ int main (int argc, char *argv[])
    if (rank == 0)
    {
        for (i = 0; i < n; i++)
-           printf (" i = %2ld \t %ld \n", i, a_all[i]);
+           printf ("%ld ", i, a_all[i]);
    }
 
     // free memory :
