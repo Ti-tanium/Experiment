@@ -185,7 +185,6 @@ int main(int argc, char *argv[]) {
     int **local_a, **local_b, **local_c;
     clock_t start,finish;
     MPI_Init(&argc, &argv);
-    start_time = MPI_Wtime();
 
     GridStructure grid;
     GridSetup(&grid);
