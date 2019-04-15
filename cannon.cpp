@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include<mpi.h>
 #include<math.h>
+#include<time.h>
 
 int allocMatrix(int*** mat, int rows, int cols) {
 	// Allocate rows*cols contiguous items
@@ -75,10 +76,11 @@ int main(int argc, char* argv[]) {
 	int blockDim;
 	int left, right, up, down;
 	int bCastData[4];
+    clock_t start,end;
 
 	// Initialize the MPI environment
 	MPI_Init(&argc, &argv);
-
+    start=clock();
 	// World size
 	MPI_Comm_size(MPI_COMM_WORLD, &worldSize);
 	
@@ -140,8 +142,8 @@ int main(int argc, char* argv[]) {
 				A[i][j] = n;
 			}
 		}
-		printf("A matrix:\n");
-		printMatrix(A, rows);
+		// printf("A matrix:\n");
+		// printMatrix(A, rows);
 		fclose(fp);
 
 		// Read matrix B
@@ -155,8 +157,8 @@ int main(int argc, char* argv[]) {
 				B[i][j] = n;
 			}
 		}
-		printf("B matrix:\n");
-		printMatrix(B, rows);
+		// printf("B matrix:\n");
+		// printMatrix(B, rows);
 		fclose(fp);
 
 		if (allocMatrix(&C, rows, columns) != 0) {
@@ -276,13 +278,14 @@ int main(int argc, char* argv[]) {
 
 	freeMatrix(&localC);
 	freeMatrix(&multiplyRes);
-
-	if (rank == 0) {
+	
+	end=clock();
+	// Finalize the MPI environment
+    printf("Time used:%lf",(double)(end-start));
+    if (rank == 0) {
 		printf("C is:\n");
 		printMatrix(C, rows);
 	}
-	
-	// Finalize the MPI environment
 	MPI_Finalize();
 
 	return 0;
