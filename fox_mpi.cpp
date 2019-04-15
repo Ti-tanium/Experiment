@@ -3,27 +3,24 @@
 #include <algorithm>
 #include <fstream>
 #include <cmath>
-#include <cstring>
-
+#include<cstring>
+ 
 const int root_id = 0;
 const int max_procs_size = 16;
-
+ 
 int main(int argc,char *argv[])
 {
     double start_time, end_time, time;
     int procs_id, procs_size;
     MPI_Status status;
     MPI_Request reqSend, reqRecv;
-
-    // 并行开始
     MPI_Init(&argc,&argv);
     start_time = MPI_Wtime();
-    
     MPI_Comm_size(MPI_COMM_WORLD,&procs_size);
     MPI_Comm_rank(MPI_COMM_WORLD,&procs_id);
  
     // 参数检查
-    int N=4;
+    int N=0;
     {
         for (int i=1; i<argc; ++i ){
             char * pos =strstr(argv[i], "-N=");
@@ -56,10 +53,10 @@ int main(int argc,char *argv[])
     }
  
     //初始化矩阵
-    int * A = new int[n_sqr];
-    int * B = new int[n_sqr];
-    int * C = new int[n_sqr];
-    int * T = new int[n_sqr];
+    int *A = new int[n_sqr];
+    int *B = new int[n_sqr];
+    int *C = new int[n_sqr];
+    int *T = new int[n_sqr];
  
     for (int i=0; i<n; ++i)
         for (int j=0; j<n; ++j) {
@@ -69,7 +66,7 @@ int main(int argc,char *argv[])
         }
  
     //输出矩阵
-    printf("\nA on procs %d :  ", procs_id);
+    printf("A on procs %d :  ", procs_id);
     for (int i=0; i<n; ++i) {
         for (int j=0; j<n; ++j) {
             printf("%5d",A[i*n+j]);
@@ -77,12 +74,12 @@ int main(int argc,char *argv[])
         printf("\n");
     }
  
-    printf("\nB on procs %d :  ", procs_id);
+    printf("B on procs %d :  ", procs_id);
     for (int i=0; i<n; ++i) {
         for (int j=0; j<n; ++j) {
             printf("%5d",B[i*n+j]);
         }
-        printf(" ");
+        printf("\n");
     }
  
     // 划分组, 建立子通信空间
@@ -101,6 +98,7 @@ int main(int argc,char *argv[])
     MPI_Comm_rank(cart_col, & rank_cart_col);
  
     // 计算并传递
+    
     for (int round = 0; round < procs_size_sqrt; ++ round) {
  
         MPI_Isend(B, n_sqr, MPI_INT, (procs_coords[0] - 1 + procs_size_sqrt) % procs_size_sqrt, 
@@ -125,7 +123,7 @@ int main(int argc,char *argv[])
     }
  
     //输出结果
-    printf("\nC on procs %d :  ", procs_id);
+    printf("C on procs %d :  ", procs_id);
     for (int i=0; i<n; ++i) {
         for (int j=0; j<n; ++j) {
             printf("%5d",C[i*n+j]);
@@ -145,7 +143,6 @@ int main(int argc,char *argv[])
     delete []T;
     end_time = MPI_Wtime();
     MPI_Finalize();
-    printf("\ntask %d consumed %lf seconds ", procs_id, end_time-start_time);
- 
+    printf("task %d consumed %lf seconds ", procs_id, end_time-start_time);
     return 0;
 }
