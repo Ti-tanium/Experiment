@@ -80,7 +80,6 @@ int main(int argc, char* argv[]) {
 
 	// Initialize the MPI environment
 	MPI_Init(&argc, &argv);
-    start=clock();
 	// World size
 	MPI_Comm_size(MPI_COMM_WORLD, &worldSize);
 	
@@ -142,8 +141,8 @@ int main(int argc, char* argv[]) {
 				A[i][j] = n;
 			}
 		}
-		// printf("A matrix:\n");
-		// printMatrix(A, rows);
+		printf("A matrix:\n");
+		printMatrix(A, rows);
 		fclose(fp);
 
 		// Read matrix B
@@ -157,8 +156,8 @@ int main(int argc, char* argv[]) {
 				B[i][j] = n;
 			}
 		}
-		// printf("B matrix:\n");
-		// printMatrix(B, rows);
+		printf("B matrix:\n");
+		printMatrix(B, rows);
 		fclose(fp);
 
 		if (allocMatrix(&C, rows, columns) != 0) {
@@ -172,7 +171,7 @@ int main(int argc, char* argv[]) {
 		bCastData[3] = columns;
 	}
 	
-
+    start=clock();
 	// Create 2D Cartesian grid of processes
 	MPI_Bcast(&bCastData, 4, MPI_INT, 0, MPI_COMM_WORLD);
 	procDim = bCastData[0];
@@ -286,14 +285,14 @@ int main(int argc, char* argv[]) {
         clock_t sstart,send;
         sstart=clock();
         int i, j, k;
-	    for (i = 0; i<matrixScale; i++)
-		    for (j = 0; j<matrixScale; j++)
-			    for (k = 0; k<matrixScale; k++)
-				    matrixC[i][j] += matrixA[i][k] * matrixB[k][j];
+        printf("C is:\n");
+		printMatrix(C, rows);
+	    for (i = 0; i<columns; i++)
+		    for (j = 0; j<rows; j++)
+			    for (k = 0; k<columns; k++)
+				    C[i][j] += A[i][k] * B[k][j];
         send=clock();
         printf("\nTime used:%lf\n",(double)(end-start)/(send-start));
-		printf("C is:\n");
-		printMatrix(C, rows);
 	}
 	MPI_Finalize();
 
