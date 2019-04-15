@@ -101,6 +101,7 @@ int main(int argc, char* argv[]) {
 			}
 			count++;
 		}
+        printf("count:%d rows:%d",count,rows)
 		columns = count / rows;
 
 		// Check matrix and world size
