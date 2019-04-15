@@ -12,116 +12,6 @@ int myRank, myRow, myCol;
 MPI_Status status;
 double starttime,endtime;
 
-int main(int argc, char *argv[])
-{
-   MPI_Init(&argc,&argv);
-   MPI_Comm_size(MPI_COMM_WORLD, &process);
-   MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
-   starttime=MPI_Wtime();
-   sqrtNum = sqrt(process);
-   if (sqrtNum*sqrtNum != process)
-   {
-      if (myRank == 0)
-	  printf("Number of processors is not a quadratic number!\n");
-      MPI_Finalize();
-      exit(1);
-   }
-   int i;
-   n = atoi(argv[1]);
-   locN  = n / sqrtNum;
-   locN2 = locN * locN;
-   myCol =  myRank % sqrtNum ;
-   myRow = (myRank-myCol) / sqrtNum ;
-
-   a = (float *)malloc( locN2 * sizeof(float) );
-   b = (float *)malloc( locN2 * sizeof(float) );
-   c = (float *)malloc( locN2 * sizeof(float) );
-
-   for(i=0; i<locN2 ; i++)
-     c[i] = 0.0;
-
-   tempA = (float *)malloc( locN2 * sizeof(float) );
-   tempB = (float *)malloc( locN2 * sizeof(float) );
-
-   if (myRank == 0)
-   {
-      A = (float **)malloc( n * sizeof(float*) );
-      B = (float **)malloc( n * sizeof(float*) );
-      C = (float **)malloc( n * sizeof(float*) );
-
-      for(i=0; i<n; i++)
-      {
-         A[i] = (float *)malloc( n * sizeof(float) );
-         B[i] = (float *)malloc( n * sizeof(float) );
-         C[i] = (float *)malloc( n * sizeof(float) );
-      }
-      randomAB();
-	  starttime=MPI_Wtime();
-      scatterAB();
-   } else
-   {
-       MPI_Recv(a, locN2, MPI_FLOAT, 0 , 1, MPI_COMM_WORLD, &status);
-       MPI_Recv(b, locN2, MPI_FLOAT, 0 , 2, MPI_COMM_WORLD, &status);
-   }
-   initAlignment();
-   mainShift();
-   if(myRank == 0)
-   {
-     togetherResult();
-	 /*
-	 *输出运算结果，数据量较大时注释该语句
-     print(A,"random matrix A : \n");
-	 print(B,"random matrix B : \n");
-	 print(C,"Matrix C = A * B : \n");
-	 */
-   } else
-   {
-      MPI_Send(c,locN2,MPI_FLOAT,0,1,MPI_COMM_WORLD);
-   }
-
-   MPI_Barrier(MPI_COMM_WORLD);
-   endtime=MPI_Wtime();
-   printf("Total time of %d is %lf\n",myRank,endtime-starttime);
-
-   MPI_Finalize();
-   return 0;
-}
-
-/*
-*功能：处理器逻辑阵列坐标至rank号的转换 
-*
-*/
-int getIndex(int row, int col, int sqrtNum)
-{
-   return ((row+sqrtNum)%sqrtNum)*sqrtNum + (col+sqrtNum)%sqrtNum;
-}
-
-/*
-*功能：从文件中读取测试数据
-*
-*/
-void randomABSave()
-{
-	int i,j;
-	FILE   *finput;
-	finput = fopen("cannonData.dat","r");
-	if (finput == NULL)
-	{
-		printf("Data file cannonData.dat not found\n");
-		return(-1);
-	}
-	int input;
-	/*随机生成A,B,并初始化C*/
-    for(i=0; i<n ; i++)
-      for(j=0; j<n ; j++)
-	  {
-		fscanf(finput,"%d",&input);
-	    A[i][j] =input;
-		fscanf(finput,"%d",&input);
-        B[i][j] = input;
-        C[i][j] = 0.0;
-	  }
-}
 
 /*
 *功能：临时生成测试数据
@@ -276,3 +166,88 @@ void print(float **m,char *str)
    }
    printf("\n");
 }
+
+/*
+*功能：处理器逻辑阵列坐标至rank号的转换 
+*
+*/
+int getIndex(int row, int col, int sqrtNum)
+{
+   return ((row+sqrtNum)%sqrtNum)*sqrtNum + (col+sqrtNum)%sqrtNum;
+}
+
+int main(int argc, char *argv[])
+{
+   MPI_Init(&argc,&argv);
+   MPI_Comm_size(MPI_COMM_WORLD, &process);
+   MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
+   starttime=MPI_Wtime();
+   sqrtNum = sqrt(process);
+   if (sqrtNum*sqrtNum != process)
+   {
+      if (myRank == 0)
+	  printf("Number of processors is not a quadratic number!\n");
+      MPI_Finalize();
+      exit(1);
+   }
+   int i;
+   n = atoi(argv[1]);
+   locN  = n / sqrtNum;
+   locN2 = locN * locN;
+   myCol =  myRank % sqrtNum ;
+   myRow = (myRank-myCol) / sqrtNum ;
+
+   a = (float *)malloc( locN2 * sizeof(float) );
+   b = (float *)malloc( locN2 * sizeof(float) );
+   c = (float *)malloc( locN2 * sizeof(float) );
+
+   for(i=0; i<locN2 ; i++)
+     c[i] = 0.0;
+
+   tempA = (float *)malloc( locN2 * sizeof(float) );
+   tempB = (float *)malloc( locN2 * sizeof(float) );
+
+   if (myRank == 0)
+   {
+      A = (float **)malloc( n * sizeof(float*) );
+      B = (float **)malloc( n * sizeof(float*) );
+      C = (float **)malloc( n * sizeof(float*) );
+
+      for(i=0; i<n; i++)
+      {
+         A[i] = (float *)malloc( n * sizeof(float) );
+         B[i] = (float *)malloc( n * sizeof(float) );
+         C[i] = (float *)malloc( n * sizeof(float) );
+      }
+      randomAB();
+	  starttime=MPI_Wtime();
+      scatterAB();
+   } else
+   {
+       MPI_Recv(a, locN2, MPI_FLOAT, 0 , 1, MPI_COMM_WORLD, &status);
+       MPI_Recv(b, locN2, MPI_FLOAT, 0 , 2, MPI_COMM_WORLD, &status);
+   }
+   initAlignment();
+   mainShift();
+   if(myRank == 0)
+   {
+     togetherResult();
+	 /*
+	 *输出运算结果，数据量较大时注释该语句
+     print(A,"random matrix A : \n");
+	 print(B,"random matrix B : \n");
+	 print(C,"Matrix C = A * B : \n");
+	 */
+   } else
+   {
+      MPI_Send(c,locN2,MPI_FLOAT,0,1,MPI_COMM_WORLD);
+   }
+
+   MPI_Barrier(MPI_COMM_WORLD);
+   endtime=MPI_Wtime();
+   printf("Total time of %d is %lf\n",myRank,endtime-starttime);
+
+   MPI_Finalize();
+   return 0;
+}
+
