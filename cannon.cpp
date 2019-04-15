@@ -281,7 +281,7 @@ int main(int argc, char* argv[]) {
 	
 	end=clock();
 	// Finalize the MPI environment
-    printf("Time used:%lf",(double)(end-start));
+    printf("Time used:%lf\n",(double)(end-start));
     if (rank == 0) {
 		printf("C is:\n");
 		printMatrix(C, rows);
