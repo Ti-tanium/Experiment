@@ -20,7 +20,7 @@ int main(int argc,char *argv[])
     MPI_Comm_rank(MPI_COMM_WORLD,&procs_id);
  
     // 参数检查
-    int N=0;
+    int N=4;
     {
         for (int i=1; i<argc; ++i ){
             char * pos =strstr(argv[i], "-N=");
@@ -71,7 +71,7 @@ int main(int argc,char *argv[])
         for (int j=0; j<n; ++j) {
             printf("%5d",A[i*n+j]);
         }
-        printf("\n");
+        printf(" ");
     }
  
     printf("B on procs %d :  ", procs_id);
@@ -79,7 +79,7 @@ int main(int argc,char *argv[])
         for (int j=0; j<n; ++j) {
             printf("%5d",B[i*n+j]);
         }
-        printf("\n");
+        printf(" ");
     }
  
     // 划分组, 建立子通信空间
@@ -128,7 +128,7 @@ int main(int argc,char *argv[])
         for (int j=0; j<n; ++j) {
             printf("%5d",C[i*n+j]);
         }
-        printf("\n");
+        printf(" ");
     }
     
     
