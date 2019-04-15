@@ -251,6 +251,14 @@ int main(int argc, char *argv[])
    printf("Total time of %d is %lf\n",myRank,endtime-starttime);
 
    MPI_Finalize();
+   free(A);
+   free(B);
+   free(C);
+   free(a);
+   free(b);
+   free(c);
+   free(tempA);
+   free(tempB)
    return 0;
 }
 
