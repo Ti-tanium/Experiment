@@ -11,7 +11,7 @@ int n, locN, locN2,process, sqrtNum;
 int myRank, myRow, myCol;
 MPI_Status status;
 double starttime,endtime;
-
+int p;
 
 /*
 *功能：临时生成测试数据
@@ -181,6 +181,7 @@ int main(int argc, char *argv[])
    MPI_Init(&argc,&argv);
    MPI_Comm_size(MPI_COMM_WORLD, &process);
    MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
+   p=process;
    starttime=MPI_Wtime();
    sqrtNum = sqrt(process);
    if (sqrtNum*sqrtNum != process)
