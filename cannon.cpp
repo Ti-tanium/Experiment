@@ -258,7 +258,7 @@ int main(int argc, char *argv[])
    free(b);
    free(c);
    free(tempA);
-   free(tempB)
+   free(tempB);
    return 0;
 }
 
