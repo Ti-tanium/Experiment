@@ -66,20 +66,20 @@ int main(int argc,char *argv[])
         }
  
     //输出矩阵
-    printf("A on procs %d :  ", procs_id);
+    printf("\nA on procs %d :  \n", procs_id);
     for (int i=0; i<n; ++i) {
         for (int j=0; j<n; ++j) {
             printf("%5d",A[i*n+j]);
         }
-        printf(" ");
+        printf("\n");
     }
  
-    printf("B on procs %d :  ", procs_id);
+    printf("\nB on procs %d :\n", procs_id);
     for (int i=0; i<n; ++i) {
         for (int j=0; j<n; ++j) {
             printf("%5d",B[i*n+j]);
         }
-        printf(" ");
+        printf("\n");
     }
  
     // 划分组, 建立子通信空间
@@ -123,12 +123,12 @@ int main(int argc,char *argv[])
     }
  
     //输出结果
-    printf("C on procs %d :  ", procs_id);
+    printf("\nC on procs %d :\n", procs_id);
     for (int i=0; i<n; ++i) {
         for (int j=0; j<n; ++j) {
             printf("%5d",C[i*n+j]);
         }
-        printf(" ");
+        printf("\n");
     }
     
     
