@@ -52,10 +52,10 @@ int main(int argc,char *argv[])
     }
  
     //初始化矩阵
-    int * A = new int[n_sqr];
-    int * B = new int[n_sqr];
-    int * C = new int[n_sqr];
-    int * T = new int[n_sqr];
+    int *A = new int[n_sqr];
+    int *B = new int[n_sqr];
+    int *C = new int[n_sqr];
+    int *T = new int[n_sqr];
  
     for (int i=0; i<n; ++i)
         for (int j=0; j<n; ++j) {
@@ -70,7 +70,7 @@ int main(int argc,char *argv[])
         for (int j=0; j<n; ++j) {
             printf("%5d",A[i*n+j]);
         }
-        printf(" ");
+        printf("\n");
     }
  
     printf("B on procs %d :  ", procs_id);
@@ -78,7 +78,7 @@ int main(int argc,char *argv[])
         for (int j=0; j<n; ++j) {
             printf("%5d",B[i*n+j]);
         }
-        printf(" ");
+        printf("\n");
     }
  
     // 划分组, 建立子通信空间
@@ -127,7 +127,7 @@ int main(int argc,char *argv[])
         for (int j=0; j<n; ++j) {
             printf("%5d",C[i*n+j]);
         }
-        printf(" ");
+        printf("\n");
     }
     
     
@@ -143,6 +143,5 @@ int main(int argc,char *argv[])
     end_time = MPI_Wtime();
     MPI_Finalize();
     printf("task %d consumed %lf seconds ", procs_id, end_time-start_time);
- 
     return 0;
 }
