@@ -13,6 +13,16 @@ MPI_Status status;
 double starttime,endtime;
 int p;
 
+
+/*
+*功能：处理器逻辑阵列坐标至rank号的转换 
+*
+*/
+int getIndex(int row, int col, int sqrtNum)
+{
+   return ((row+sqrtNum)%sqrtNum)*sqrtNum + (col+sqrtNum)%sqrtNum;
+}
+
 /*
 *功能：临时生成测试数据
 *
@@ -167,14 +177,6 @@ void print(float **m,char *str)
    printf("\n");
 }
 
-/*
-*功能：处理器逻辑阵列坐标至rank号的转换 
-*
-*/
-int getIndex(int row, int col, int sqrtNum)
-{
-   return ((row+sqrtNum)%sqrtNum)*sqrtNum + (col+sqrtNum)%sqrtNum;
-}
 
 int main(int argc, char *argv[])
 {
