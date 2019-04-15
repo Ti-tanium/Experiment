@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <fstream>
 #include <cmath>
+#include<cstring>
  
 const int root_id = 0;
 const int max_procs_size = 16;
