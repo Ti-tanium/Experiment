@@ -292,7 +292,7 @@ int main(int argc, char* argv[]) {
 			    for (k = 0; k<columns; k++)
 				    C[i][j] += A[i][k] * B[k][j];
         send=clock();
-        printf("\nTime used:%lf\n",(double)(end-start)/(send-start));
+        printf("\nSpeed up:%lf\n",(double)(send-start)/(end-start));
 	}
 	MPI_Finalize();
 
