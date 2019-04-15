@@ -281,8 +281,17 @@ int main(int argc, char* argv[]) {
 	
 	end=clock();
 	// Finalize the MPI environment
-    printf("Time used:%lf\n",(double)(end-start));
+    
     if (rank == 0) {
+        clock_t sstart,send;
+        sstart=clock();
+        int i, j, k;
+	    for (i = 0; i<matrixScale; i++)
+		    for (j = 0; j<matrixScale; j++)
+			    for (k = 0; k<matrixScale; k++)
+				    matrixC[i][j] += matrixA[i][k] * matrixB[k][j];
+        send=clock();
+        printf("\nTime used:%lf\n",(double)(end-start)/(send-start));
 		printf("C is:\n");
 		printMatrix(C, rows);
 	}
