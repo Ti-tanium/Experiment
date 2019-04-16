@@ -1,16 +1,3 @@
-
-//*********************************************************************************
-//
-// Filename : 'PSRS.c'
-//
-// Function : Parallel sorting by regular sampling (using quick sort for local sorting)
-//
-// Author : Xingzhong Li
-//
-// Date : 2018/05
-//
-//*********************************************************************************
-
 # define NDEBUG
 # include <stdio.h>
 # include <stdlib.h>
@@ -18,13 +5,6 @@
 # include <time.h>
 # include <mpi.h>
 
-//================================================================================
-// 
-// Function name : cmp
-//
-// Function : input parameter for qsort (sort integer)
-//
-//================================================================================
 int cmp (const void *a, const void *b)
 {
     return (*(int *)a - *(int *)b);
