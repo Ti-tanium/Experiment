@@ -3,6 +3,7 @@
 # include <stdlib.h>
 # include <assert.h>
 # include <time.h>
+# include <algorithm>
 # include <mpi.h>
 
 int cmp (const void *a, const void *b)
@@ -155,8 +156,8 @@ int main (int argc, char *argv[])
     MPI_Gather (&t, 1, MPI_DOUBLE, t_all, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     if (rank == 0)
     {
-            // output sorting result :
-   
+        // output sorting result :
+        printf("Sorted:\n");
         for (i = 0; i < n; i++)
            printf ("%ld ", i, a_all[i]);
         printf("\n");
@@ -166,7 +167,17 @@ int main (int argc, char *argv[])
             if (t_max < t_all[i]) 
                 t_max = t_all[i];
         }
-        printf ("\n t_max = %lf \n", t_max);
+
+        double qstart,qend;
+
+        a_test = (int *)calloc (n, sizeof (int));
+        for (i = 0; i < n; i++){
+            a_test[i] =1+(int)(50.0*rand()/(RAND_MAX+1.0));
+        }
+        qstart=MPI_Wtime();
+        sort(a_test,a_test+n);
+        qend=MPI_Wtime;
+        printf ("\n Speed up = %lf \n", (qstart-qend)/t_max);
     }
 
     // free memory :
