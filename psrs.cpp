@@ -38,7 +38,7 @@ int main (int argc, char *argv[])
         assert (a_all != NULL);
 
         srand (time (NULL));
-        printf("\nUnsorted:")
+        printf("\nUnsorted:");
         for (i = 0; i < n; i++){
             a_all[i] =1+(int)(50.0*rand()/(RAND_MAX+1.0));
             printf("%ld ",a_all[i]);
