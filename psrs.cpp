@@ -178,7 +178,7 @@ int main (int argc, char *argv[])
         qstart=MPI_Wtime();
         std::sort(a_test,a_test+n);
         qend=MPI_Wtime();
-        printf ("\n Speed up = %lf \n", (qstart-qend)/t_max);
+        printf ("\n Speed up = %lf \n", (qend-qstart)/t_max);
     }
 
     // free memory :
