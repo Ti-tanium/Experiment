@@ -170,12 +170,11 @@ int main (int argc, char *argv[])
         }
 
         double qstart,qend;
-
+        qstart=MPI_Wtime();
         int* a_test = (int *)calloc (n, sizeof (int));
         for (i = 0; i < n; i++){
             a_test[i] =1+(int)(50.0*rand()/(RAND_MAX+1.0));
         }
-        qstart=MPI_Wtime();
         std::sort(a_test,a_test+n);
         qend=MPI_Wtime();
         printf ("\n Speed up = %lf \n", (qend-qstart)/t_max);

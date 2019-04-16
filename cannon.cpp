@@ -178,7 +178,7 @@ int main(int argc, char* argv[]) {
 	blockDim = bCastData[1];
 	rows = bCastData[2];
 	columns = bCastData[3];
-
+ 
 	dim[0] = procDim; dim[1] = procDim;
 	period[0] = 1; period[1] = 1;
 	reorder = 1;

@@ -98,7 +98,6 @@ int main(int argc,char *argv[])
     MPI_Comm_rank(cart_col, & rank_cart_col);
  
     // 计算并传递
-    
     for (int round = 0; round < procs_size_sqrt; ++ round) {
  
         MPI_Isend(B, n_sqr, MPI_INT, (procs_coords[0] - 1 + procs_size_sqrt) % procs_size_sqrt, 
@@ -108,7 +107,7 @@ int main(int argc,char *argv[])
         if (broader == procs_coords[1]) std::copy(A,A+n_sqr,T);
  
         MPI_Bcast(T, n_sqr, MPI_INT, broader , cart_row);
- 
+
         for (int row=0; row<n; ++row)
             for (int col=0; col<n; ++col)
                 for (int k=0; k<n; ++k) {
